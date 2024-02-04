@@ -18,8 +18,9 @@ public class Trick implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String species;
 
-    @Column(unique = true)
+    @Column(nullable = false)
     private String name;
 }

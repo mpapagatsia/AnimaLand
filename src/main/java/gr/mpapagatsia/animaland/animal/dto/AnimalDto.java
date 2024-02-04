@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -26,13 +27,17 @@ public class AnimalDto implements Serializable {
     private String name;
     @NotEmpty
     private String species;
+
     private List<String> tricks;
+
 
     public static AnimalDto fromEntity(Animal animal) {
         return AnimalDto.builder().name(animal.getName())
                 .species(animal.getSpecies())
                 .uuid(animal.getUuid())
-                .tricks(animal.getTricks().stream().map(Trick::getName).toList())
+                .tricks(Optional.ofNullable(animal.getTricks())
+                                .map(tricks1 -> tricks1.stream().map(Trick::getName).toList())
+                        .orElse(null))
                 .build();
     }
 
@@ -41,7 +46,11 @@ public class AnimalDto implements Serializable {
                 .uuid(dto.getUuid())
                 .name(dto.getName())
                 .species(dto.getSpecies())
-                .tricks(dto.getTricks().stream().map(t-> Trick.builder().name(t).species(dto.getSpecies()).build()).toList()).build();
+                .tricks(Optional.ofNullable(dto.getTricks())
+                        .map(tricks1 -> tricks1.stream().map(t->Trick.builder().name(t).species(dto.getSpecies()).build()).toList())
+                        .orElse(null))
+                .build();
     }
+
 
 }

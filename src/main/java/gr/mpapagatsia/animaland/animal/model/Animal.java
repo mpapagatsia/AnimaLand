@@ -20,11 +20,13 @@ public class Animal implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true)
     private String uuid;
 
+    @Column(nullable = false)
     private String species;
 
     @ManyToMany(cascade = CascadeType.ALL)

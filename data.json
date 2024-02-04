@@ -1,0 +1,36 @@
+
+[
+  {
+    "name": "Oscar",
+    "id": "id1",
+    "species": "cat",
+    "tricks": [
+      "walksOnLaptop"
+    ]
+  },
+  {
+    "name": "Brownie",
+    "id": "id2",
+    "species": "dog",
+    "tricks": [
+      "jumps",
+      "rollsOver",
+      "barks"
+    ]
+  },
+  {
+    "name": "Cookie",
+    "id": "id3",
+    "species": "dog",
+    "tricks": [
+      "jumps",
+      "barks"
+    ]
+  },
+  {
+    "name": "Goldie",
+    "id": "id4",
+    "species": "fish",
+    "tricks": "None"
+  }
+]

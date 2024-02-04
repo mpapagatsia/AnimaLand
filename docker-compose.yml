@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  postgresdb:
+    image: postgres
+    environment:
+       POSTGRES_USER: maria
+       POSTGRES_PASSWORD: maria
+       POSTGRES_DB: animaland
+       POSTGRES_HOST_AUTH_METHOD : scram-sha-256
+       POSTGRES_INITDB_ARGS=--auth-host : scram-sha-256
+    ports:
+      - "5433:5432"
+    networks:
+      - animaland_net
+    volumes:
+      - db:/var/lib/postgres
+  app:
+    depends_on:
+      - postgresdb
+    build: .
+    restart: on-failure
+    ports:
+      - "8081:8080"
+    environment:
+     SPRING_DATASOURCE_URL: jdbc:postgresql://127.0.0.1:5433/animaland
+     SPRING_DATASOURCE_USERNAME: maria
+     SPRING_DATASOURCE_PASSWORD: maria
+    networks:
+      - animaland_net
+
+networks:
+  animaland_net:
+    driver : bridge
+volumes:
+  db:

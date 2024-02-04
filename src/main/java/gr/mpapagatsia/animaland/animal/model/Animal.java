@@ -29,7 +29,8 @@ public class Animal implements Serializable {
     @Column(nullable = false)
     private String species;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tricks_id", nullable = true)
+    @ManyToMany(cascade = { CascadeType.ALL})
+    @JoinTable(name = "animal_tricks", joinColumns = @JoinColumn(name = "animal_id"),
+            inverseJoinColumns = @JoinColumn(name = "trick_id"))
     private List<Trick> tricks;
 }

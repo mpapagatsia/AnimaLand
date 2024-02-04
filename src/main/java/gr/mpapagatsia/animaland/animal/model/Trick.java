@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,4 +24,9 @@ public class Trick implements Serializable {
 
     @Column(nullable = false)
     private String name;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "animal_tricks", joinColumns = @JoinColumn(name = "trick_id"),
+            inverseJoinColumns = @JoinColumn(name = "animal_id"))
+    private List<Animal> animals;
 }

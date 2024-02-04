@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
+
 
 @RestController
 @RequestMapping(path = "animals", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,7 +42,7 @@ public class AnimalController {
     }
 
     @GetMapping(value = "{id}/doTrick", name = "Animal does a trick")
-    public  ResponseEntity<TrickDto> doTrick(@PathVariable String id) {
+    public ResponseEntity<TrickDto> doTrick(@PathVariable String id) {
         log.info("Request animal with id {} to do a trick.", id);
         //TODO exception handling
         var trickDto = TrickDto.emptyTrick();
@@ -49,6 +52,18 @@ public class AnimalController {
             log.error(e.getMessage());
         }
         return ResponseEntity.ok(trickDto);
+    }
+
+    @PutMapping(value = "{id}/learnTrick", name = "Animal learns a new trick", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TrickDto>> learnTrick(@PathVariable String id) {
+        log.info("Animal with id {} is about to learn a new trick.", id);
+        try {
+            var tricks = animalService.learnTrick(id);
+            return ResponseEntity.ok(tricks);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return ResponseEntity.ok(Collections.emptyList());
     }
 
 }

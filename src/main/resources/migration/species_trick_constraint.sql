@@ -1,0 +1,1 @@
+ALTER TABLE public.trick ADD CONSTRAINT uq_species_trick UNIQUE (name,species);

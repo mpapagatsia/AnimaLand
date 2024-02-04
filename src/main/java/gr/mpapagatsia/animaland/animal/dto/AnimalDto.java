@@ -41,7 +41,7 @@ public class AnimalDto implements Serializable {
                 .uuid(dto.getUuid())
                 .name(dto.getName())
                 .species(dto.getSpecies())
-                .tricks(dto.getTricks().stream().map(t-> Trick.builder().name(t).build()).toList()).build();
+                .tricks(dto.getTricks().stream().map(t-> Trick.builder().name(t).species(dto.getSpecies()).build()).toList()).build();
     }
 
 }

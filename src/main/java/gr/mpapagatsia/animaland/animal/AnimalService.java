@@ -4,6 +4,8 @@ import gr.mpapagatsia.animaland.animal.dto.AnimalDto;
 import gr.mpapagatsia.animaland.animal.model.Animal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +21,8 @@ public class AnimalService {
         this.repository = repository;
     }
 
-    public List<AnimalDto> getAllAnimals() {
-        return repository.findAll().stream().map(AnimalDto::fromEntity).toList();
+    public Page<AnimalDto> getAllAnimals(Pageable page) {
+        return repository.findAll(page).map(AnimalDto::fromEntity);
     }
 
     @Transactional

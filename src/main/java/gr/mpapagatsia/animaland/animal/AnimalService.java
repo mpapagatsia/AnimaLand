@@ -4,6 +4,8 @@ import gr.mpapagatsia.animaland.animal.dto.AnimalDto;
 import gr.mpapagatsia.animaland.animal.dto.TrickDto;
 import gr.mpapagatsia.animaland.animal.model.Animal;
 import gr.mpapagatsia.animaland.animal.model.Trick;
+import gr.mpapagatsia.animaland.exception.AnimalNotFoundException;
+import gr.mpapagatsia.animaland.exception.TrickNotFoundException;
 import gr.mpapagatsia.animaland.trick.TrickRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -40,45 +41,45 @@ public class AnimalService {
         return repository.save(AnimalDto.toEntity(animalDto));
     }
 
-    public TrickDto doTrick(@NotNull String uuid) throws Exception{
-        Optional<Animal> animal = repository.findByUuid(uuid);
+    public TrickDto doTrick(@NotNull String uuid) {
+        var animal = repository.findByUuid(uuid).orElseThrow(() -> new AnimalNotFoundException(uuid));
 
-        //TODO exception handling
-        var tricks = animal.map(Animal::getTricks).orElseThrow(() -> new Exception("Animal not found"));
-        if (!tricks.isEmpty()) {
-            Random random = new Random();
-            return new TrickDto(tricks.get(random.nextInt(tricks.size())).getName());
+        if (CollectionUtils.isEmpty(animal.getTricks())) {
+            throw new TrickNotFoundException(uuid);
         }
 
-        return TrickDto.emptyTrick();
+        Random random = new Random();
+        return new TrickDto(animal.getTricks().get(random.nextInt(animal.getTricks().size())).getName());
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Transactional
-    public List<TrickDto> learnTrick(String uuid) throws Exception {
-        var animal = repository.findByUuid(uuid).orElseThrow(() -> new Exception("Animal not found"));
+    public List<TrickDto> learnTrick(String uuid) {
+        var animal = repository.findByUuid(uuid).orElseThrow(() -> new AnimalNotFoundException(uuid));
 
-        List<Trick> speciesTricks = trickRepository.getAllBySpecies(animal.getSpecies());
-        if(speciesTricks.isEmpty()) {
-            return Collections.emptyList();
+        var speciesTricks = trickRepository.getAllBySpecies(animal.getSpecies());
+        if(CollectionUtils.isEmpty(speciesTricks)) {
+            throw new TrickNotFoundException(uuid);
         }
         var trick = getRandomTrick(speciesTricks, animal);
-        if(trick.isEmpty()){
-            return Collections.emptyList();
-        }
-        trick.get().getAnimals().add(animal);
-        animal.getTricks().add(trick.get());
+
+        trick.getAnimals().add(animal);
+        animal.getTricks().add(trick);
 
         return animal.getTricks().stream().map(t -> new TrickDto(t.getName())).toList();
     }
 
-    private static Optional<Trick> getRandomTrick(List<Trick> speciesTricks, Animal animal) {
+    /**
+     * @param speciesTricks
+     * @param animal
+     * @return a new trick of the available for the Animal
+     */
+    private static Trick getRandomTrick(List<Trick> speciesTricks, Animal animal) {
         Random random = new Random();
         var trickOptions = speciesTricks.stream().filter(t -> !animal.getTricks().contains(t)).toList();
-        if(trickOptions.isEmpty()) {
-            return Optional.empty();
+        if(CollectionUtils.isEmpty(trickOptions)) {
+            throw new TrickNotFoundException(animal.getName(), "already knows all tricks!");
         }
-        return Optional.ofNullable(trickOptions.get(random.nextInt(trickOptions.size())));
+        return trickOptions.get(random.nextInt(trickOptions.size()));
     }
 
 }

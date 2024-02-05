@@ -3,7 +3,6 @@ package gr.mpapagatsia.animaland.animal;
 import gr.mpapagatsia.animaland.animal.dto.AnimalDto;
 import gr.mpapagatsia.animaland.animal.dto.TrickDto;
 import gr.mpapagatsia.animaland.animal.model.Animal;
-import gr.mpapagatsia.animaland.animal.model.Trick;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -44,26 +42,15 @@ public class AnimalController {
     @GetMapping(value = "{id}/doTrick", name = "Animal does a trick")
     public ResponseEntity<TrickDto> doTrick(@PathVariable String id) {
         log.info("Request animal with id {} to do a trick.", id);
-        //TODO exception handling
-        var trickDto = TrickDto.emptyTrick();
-        try {
-            trickDto = animalService.doTrick(id);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return ResponseEntity.ok(trickDto);
+
+        return ResponseEntity.ok(animalService.doTrick(id));
     }
 
     @PutMapping(value = "{id}/learnTrick", name = "Animal learns a new trick", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TrickDto>> learnTrick(@PathVariable String id) {
         log.info("Animal with id {} is about to learn a new trick.", id);
-        try {
-            var tricks = animalService.learnTrick(id);
-            return ResponseEntity.ok(tricks);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return ResponseEntity.ok(Collections.emptyList());
+
+        return ResponseEntity.ok(animalService.learnTrick(id));
     }
 
 }

@@ -62,13 +62,23 @@ public class AnimalService {
         if(speciesTricks.isEmpty()) {
             return Collections.emptyList();
         }
-            Random random = new Random();
-            //TODO learn one that does not already know
-            Trick trick = speciesTricks.get(random.nextInt(speciesTricks.size()));
-            trick.getAnimals().add(animal);
-            trickRepository.save(trick);
+        var trick = getRandomTrick(speciesTricks, animal);
+        if(trick.isEmpty()){
+            return Collections.emptyList();
+        }
+        trick.get().getAnimals().add(animal);
+        animal.getTricks().add(trick.get());
 
-        return repository.findById(animal.getId()).get().getTricks().stream().map(t -> new TrickDto(t.getName())).toList();
+        return animal.getTricks().stream().map(t -> new TrickDto(t.getName())).toList();
+    }
+
+    private static Optional<Trick> getRandomTrick(List<Trick> speciesTricks, Animal animal) {
+        Random random = new Random();
+        var trickOptions = speciesTricks.stream().filter(t -> !animal.getTricks().contains(t)).toList();
+        if(trickOptions.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(trickOptions.get(random.nextInt(trickOptions.size())));
     }
 
 }

@@ -1,6 +1,7 @@
 server:
   port: 8081
-  contextPath: /zoo
+  servlet:
+    contextPath: /zoo
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/animaland

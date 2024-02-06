@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -38,7 +40,23 @@ public class AnimalService {
 
     @Transactional
     public Animal createAnimal(AnimalDto animalDto) {
-        return repository.save(AnimalDto.toEntity(animalDto));
+        Animal animal = AnimalDto.toEntity(animalDto);
+
+        //Add known tricks and create the new ones
+        List<Trick> tricksToSave = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(animalDto.getTricks())) {
+            for (String name : animalDto.getTricks()) {
+                Optional<Trick> trick = trickRepository.findByName(name);
+                if(trick.isPresent()) {
+                    trick.ifPresent(tricksToSave::add);
+                } else {
+                    tricksToSave.add(Trick.builder().species(animalDto.getSpecies()).name(name).build());
+                }
+            }
+            animal.setTricks(tricksToSave);
+        }
+
+        return repository.save(animal);
     }
 
     public TrickDto doTrick(@NotNull String uuid) {

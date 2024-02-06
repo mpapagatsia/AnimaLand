@@ -1,9 +1,7 @@
 package gr.mpapagatsia.animaland.animal.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "trick")
 public class Trick implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +24,8 @@ public class Trick implements Serializable {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "animal_tricks", joinColumns = @JoinColumn(name = "trick_id"),
-            inverseJoinColumns = @JoinColumn(name = "animal_id"))
+    @ManyToMany(mappedBy = "tricks")
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private List<Animal> animals;
 }

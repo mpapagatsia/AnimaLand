@@ -1,7 +1,7 @@
 
 [
   {
-    "name": "Oscar",
+    "name": "Blue",
     "id": "id1",
     "species": "cat",
     "tricks": [
@@ -9,7 +9,7 @@
     ]
   },
   {
-    "name": "Brownie",
+    "name": "Romeo",
     "id": "id2",
     "species": "dog",
     "tricks": [
@@ -19,7 +19,7 @@
     ]
   },
   {
-    "name": "Cookie",
+    "name": "Jenny",
     "id": "id3",
     "species": "dog",
     "tricks": [
@@ -28,9 +28,8 @@
     ]
   },
   {
-    "name": "Goldie",
+    "name": "Nemo",
     "id": "id4",
-    "species": "fish",
-    "tricks": "None"
+    "species": "fish"
   }
 ]

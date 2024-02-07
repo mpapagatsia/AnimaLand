@@ -44,7 +44,7 @@ mvn spring-boot:run
     {
         "animals": [
             {
-                "name": "Oscar",
+                "name": "Blue",
                 "species": "cat",
                 "tricks": [
                     "walksOnLaptop"
@@ -54,7 +54,7 @@ mvn spring-boot:run
         ],
         "pageIndex": 0,
         "pageSize": 20,
-        "totalElements": 6,
+        "totalElements": 1,
         "totalPages": 1
     }
 
@@ -92,6 +92,9 @@ curl -X PUT --header 'Content-Type: application/json' --header 'Accept: applicat
 
 ## Swagger API docs
 http://localhost:8081/zoo/swagger-ui.html
+
+## Initial Data
+If you want some initial data use the POST /zoo/animals/ endpoint with json samples on data.json.
 
 ## Future Actions
 * Fix docker-compose set up to run both the database and the app

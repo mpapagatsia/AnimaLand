@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "animal")
 public class Animal implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

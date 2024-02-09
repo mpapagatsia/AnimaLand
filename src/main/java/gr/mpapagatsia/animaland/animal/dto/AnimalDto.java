@@ -2,7 +2,7 @@ package gr.mpapagatsia.animaland.animal.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import gr.mpapagatsia.animaland.animal.model.Animal;
-import gr.mpapagatsia.animaland.animal.model.Trick;
+import gr.mpapagatsia.animaland.trick.Trick;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

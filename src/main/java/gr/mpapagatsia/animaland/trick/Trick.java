@@ -1,6 +1,7 @@
-package gr.mpapagatsia.animaland.animal.model;
+package gr.mpapagatsia.animaland.trick;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import gr.mpapagatsia.animaland.animal.model.Animal;
 import lombok.*;
 
 import javax.persistence.*;

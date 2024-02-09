@@ -1,6 +1,7 @@
 package gr.mpapagatsia.animaland.animal.model;
 
 
+import gr.mpapagatsia.animaland.trick.Trick;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

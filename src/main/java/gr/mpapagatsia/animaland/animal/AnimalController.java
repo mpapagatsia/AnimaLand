@@ -2,7 +2,7 @@ package gr.mpapagatsia.animaland.animal;
 
 import gr.mpapagatsia.animaland.animal.dto.AnimalDto;
 import gr.mpapagatsia.animaland.animal.dto.PagedDto;
-import gr.mpapagatsia.animaland.animal.dto.TrickDto;
+import gr.mpapagatsia.animaland.trick.TrickDto;
 import gr.mpapagatsia.animaland.animal.model.Animal;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

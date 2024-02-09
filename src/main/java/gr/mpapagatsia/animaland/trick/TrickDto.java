@@ -1,4 +1,4 @@
-package gr.mpapagatsia.animaland.animal.dto;
+package gr.mpapagatsia.animaland.trick;
 
 public record TrickDto(String trick) {
 

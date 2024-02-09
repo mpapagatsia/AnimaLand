@@ -1,9 +1,9 @@
 package gr.mpapagatsia.animaland.animal;
 
 import gr.mpapagatsia.animaland.animal.dto.AnimalDto;
-import gr.mpapagatsia.animaland.animal.dto.TrickDto;
+import gr.mpapagatsia.animaland.trick.TrickDto;
 import gr.mpapagatsia.animaland.animal.model.Animal;
-import gr.mpapagatsia.animaland.animal.model.Trick;
+import gr.mpapagatsia.animaland.trick.Trick;
 import gr.mpapagatsia.animaland.exception.AnimalNotFoundException;
 import gr.mpapagatsia.animaland.exception.TrickNotFoundException;
 import gr.mpapagatsia.animaland.trick.TrickRepository;

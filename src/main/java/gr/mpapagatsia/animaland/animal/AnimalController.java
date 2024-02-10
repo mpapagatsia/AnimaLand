@@ -51,7 +51,7 @@ public class AnimalController {
     }
 
     @ApiOperation(value = "Learn Trick", notes = "Request an animal to learn a new trick from the available tricks to its species, if any.")
-    @PutMapping(value = "{id}/learnTrick", name = "Animal learns a new trick", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "{id}/learnTrick", name = "Animal learns a new trick", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TrickDto>> learnTrick(@PathVariable String id) {
         log.info("Animal with id {} is about to learn a new trick.", id);
 

@@ -14,40 +14,24 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class AnimalDto implements Serializable {
-
-    @JsonProperty(value = "id")
-    @NotNull
-    private String uuid;
-    @NotEmpty
-    private String name;
-    @NotEmpty
-    private String species;
-
-    private List<String> tricks;
-
+public record AnimalDto(@JsonProperty(value = "id")
+                        @NotNull String uuid,
+                        @NotEmpty String name,
+                        @NotEmpty String species,
+                        List<String> tricks) {
 
     public static AnimalDto fromEntity(Animal animal) {
-        return AnimalDto.builder().name(animal.getName())
-                .species(animal.getSpecies())
-                .uuid(animal.getUuid())
-                .tricks(Optional.ofNullable(animal.getTricks())
-                                .map(tricks1 -> tricks1.stream().map(Trick::getName).toList())
-                        .orElse(null))
-                .build();
+        return new AnimalDto(animal.getUuid(),
+                animal.getName(), animal.getSpecies(), Optional.ofNullable(animal.getTricks())
+                .map(tricks1 -> tricks1.stream().map(Trick::getName).toList())
+                .orElse(null));
     }
 
     public static Animal toEntity(AnimalDto dto) {
         return Animal.builder()
-                .uuid(dto.getUuid())
-                .name(dto.getName())
-                .species(dto.getSpecies())
+                .uuid(dto.uuid())
+                .name(dto.name())
+                .species(dto.species())
                 .build();
     }
-
-
 }

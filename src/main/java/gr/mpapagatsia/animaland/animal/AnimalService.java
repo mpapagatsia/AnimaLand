@@ -44,10 +44,10 @@ public class AnimalService {
 
         //Add known tricks and create the new ones
         List<Trick> tricksToSave = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(animalDto.getTricks())) {
-            animalDto.getTricks().forEach(trickName -> {
+        if (!CollectionUtils.isEmpty(animalDto.tricks())) {
+            animalDto.tricks().forEach(trickName -> {
                 Optional<Trick> trick = trickRepository.findByName(trickName);
-                trick.ifPresentOrElse(tricksToSave::add, ()-> tricksToSave.add(Trick.builder().species(animalDto.getSpecies()).name(trickName).build()));
+                trick.ifPresentOrElse(tricksToSave::add, ()-> tricksToSave.add(Trick.builder().species(animalDto.species()).name(trickName).build()));
             });
             animal.setTricks(tricksToSave);
         }

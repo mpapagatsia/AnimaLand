@@ -76,8 +76,7 @@ public class AnimalServiceImpl implements AnimalService {
         }
         var trick = getRandomTrick(speciesTricks, animal);
 
-        trick.getAnimals().add(animal);
-        animal.getTricks().add(trick);
+        animal.addTrick(trick);
 
         return animal.getTricks().stream().map(t -> new TrickDto(t.getName())).toList();
     }

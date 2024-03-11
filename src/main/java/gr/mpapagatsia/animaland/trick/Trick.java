@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,6 @@ public class Trick implements Serializable {
     @ManyToMany(mappedBy = "tricks")
     @JsonIgnore
     @EqualsAndHashCode.Exclude
-    private List<Animal> animals;
+    private List<Animal> animals = new ArrayList<>();
+
 }

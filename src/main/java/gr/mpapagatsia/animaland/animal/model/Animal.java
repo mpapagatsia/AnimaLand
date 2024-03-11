@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,8 +32,13 @@ public class Animal implements Serializable {
     @Column(nullable = false)
     private String species;
 
-    @ManyToMany(cascade = { CascadeType.ALL})
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "animal_tricks", joinColumns = @JoinColumn(name = "animal_id"),
             inverseJoinColumns = @JoinColumn(name = "trick_id"))
-    private List<Trick> tricks;
+    private List<Trick> tricks = new ArrayList<>();
+
+    public void addTrick(Trick trick) {
+        tricks.add(trick);
+        trick.getAnimals().add(this);
+    }
 }

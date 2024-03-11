@@ -1,0 +1,4 @@
+Hibernate Jpa:
+https://vladmihalcea.com/jpa-hibernate-synchronize-bidirectional-entity-associations/
+https://vladmihalcea.com/jpa-bidirectional-sync-methods/
+https://vladmihalcea.com/entitymanager-find-getreference-jpa/

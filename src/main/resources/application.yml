@@ -19,6 +19,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  security:
+    user.name: admin
+    user.password: admin
 springfox:
   documentation:
     swagger-ui:
